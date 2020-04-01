@@ -20,8 +20,8 @@ export default class TodoItem extends Stepan.Component {
 
     Stepan.createElement('label', todoViewContainer, {innerText: title});
     Stepan.createElement('button', todoViewContainer, {class: "destroy"});
-    Stepan.createElement('input', todoViewContainer, { class: "edit", value: title });
-
+    Stepan.createElement('input', rootElement, { class: "edit", value: title });
+    
     return rootElement
   }
 }

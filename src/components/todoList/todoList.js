@@ -24,6 +24,8 @@ import { TodoItem } from '/src/components/todoItem/index.js';
 
 export default class TodoList extends Stepan.Component {
   render(todos) { // render will always accept data to render
+  	this.parent.innerHTML = '';
+
     const rootElement = Stepan.createElement('ul', this.parent, { class: "todo-list" })
 
     todos.forEach(todoObject => new TodoItem(rootElement).render(todoObject));

@@ -10,12 +10,12 @@ const schema = DataTypes => ({
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   },
   isFinished: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: false
+    defaultValue: false,
   },
   title: {
     type: DataTypes.STRING,
@@ -23,12 +23,12 @@ const schema = DataTypes => ({
   },
   createdAt: {
     allowNull: false,
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
   },
   updatedAt: {
     allowNull: false,
-    type: DataTypes.DATE
-  }
+    type: DataTypes.DATE,
+  },
 });
 
 export default schema;

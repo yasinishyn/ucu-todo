@@ -59,7 +59,7 @@ app.use(router.routes(), router.allowedMethods());
 /**
  * Run app unless it's already started
  */
-if (process.argv[2] && process.argv[2][0] == 'c') {
+if (process.argv[2] && process.argv[2][0] === 'c') {
   const repl = require('repl');
   global.models = models;
   repl

@@ -7,7 +7,7 @@ const messages = {
   404: 'Not Found',
   410: 'Deleted safely',
   429: 'Too many requests',
-  500: 'Internal Server Error'
+  500: 'Internal Server Error',
 };
 
 /**
@@ -23,7 +23,7 @@ const raiseError = (ctx, code, error = null) => {
   ctx.status = code;
   ctx.body = {
     status: 'error',
-    message: messages[code]
+    message: messages[code],
   };
 };
 

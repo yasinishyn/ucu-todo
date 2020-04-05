@@ -6,5 +6,5 @@ module.exports = {
   hostName: `${host}:${port}`,
   serveStatic: true,
   assetHost: '',
-  secretKeyBase: process.env.SECRET_KEY_BASE
+  secretKeyBase: process.env.SECRET_KEY_BASE,
 };

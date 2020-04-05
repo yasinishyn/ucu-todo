@@ -12,6 +12,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    "no-return-await": 0 
+    'no-return-await': 0,
   },
 };

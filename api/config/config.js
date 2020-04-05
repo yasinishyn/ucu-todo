@@ -13,13 +13,13 @@ logger.info(`Starting process in ${env} mode. On port ${process.env.PORT}`);
 let configs = {
   development,
   test,
-  production
+  production,
 };
 
 let defaultConfig = {
-  env
+  env,
 };
 
-let config = {...defaultConfig, ...configs[env]};
+let config = { ...defaultConfig, ...configs[env] };
 
 module.exports = config;

@@ -4,14 +4,14 @@ const defaultConfig = {
   database: process.env.DATABASE_NAME,
   host: process.env.DATABASE_HOST,
   dialect: 'sqlite',
-  storage: './db/todo.sqlite',
+  storage: `./db/${process.env.DATABASE_NAME}.sqlite`,
   migrationStorageTableName: '_migrations',
   pool: {
     max: 5,
     min: 0,
     idle: 10000,
-    acquire: 10000
-  }
+    acquire: 10000,
+  },
 };
 
 const prodPool = {
@@ -19,27 +19,27 @@ const prodPool = {
     max: 50,
     min: 0,
     idle: 20000,
-    acquire: 20000
-  }
+    acquire: 20000,
+  },
 };
 
 const database = {
   development: {
-    ...defaultConfig
+    ...defaultConfig,
   },
   test: {
     ...defaultConfig,
-    logging: false
+    logging: false,
   },
   production: {
     ...defaultConfig,
     ...prodPool,
-    logging: false
+    logging: false,
   },
   staging: {
     ...defaultConfig,
-    ...prodPool
-  }
+    ...prodPool,
+  },
 };
 
 module.exports = database;

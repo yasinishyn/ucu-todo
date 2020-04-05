@@ -1,5 +1,3 @@
-import { type } from "os";
-
 /**
  * Logs output to console or other destination
  *
@@ -19,11 +17,11 @@ logger.error = (...args) => {
   console.trace(...args);
 
   args.forEach(el => {
-    // if (typeof el === 'object') {
-    //   console.error(...Object.values(el));
-    // } else {
+    if (typeof el === 'object') {
+      console.error(...Object.values(el));
+    } else {
       console.error(el);
-    // }
+    }
   });
 };
 

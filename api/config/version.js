@@ -1,3 +1,3 @@
 module.exports = {
-  version: process.env.VERSION
+  version: process.env.VERSION,
 };

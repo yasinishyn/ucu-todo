@@ -5,5 +5,5 @@ module.exports = {
   hostName: '',
   assetHost: '',
   serveStatic: true,
-  ssecretKeyBase: process.env.SECRET_KEY_BASE
+  ssecretKeyBase: process.env.SECRET_KEY_BASE,
 };

@@ -143,5 +143,5 @@ export default {
   show,
   create,
   update,
-  del
+  del,
 };

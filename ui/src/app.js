@@ -8,31 +8,36 @@ import {
 
 import { Footer } from './components/footer/index.js';
 
-const todos = [
-  {isDone: true, title: '(Done) Todo 1'},
-  {isDone: false, title: 'Todo 2'}
-];
-
 class App extends Stepan.Component {
-  render(todos =  []) {
-    const rootElement = this.parent;
-    const divContainer = Stepan.createElement('div', rootElement);
+  constructor(props) {
+    super(props);
 
-    // TodoListHead-----------------
-    new TodoListHead(divContainer).render();
+    this.state = {
+      todos: []
+    };
+  }
 
-    // TodoListToggleAll-----------------
-    const sectionMain = Stepan.createElement('section', divContainer, { class: 'main' });
-    new TodoListToggleAll(sectionMain).render();
+  getInitialState() {
+    fetch("http://localhost:3000/api/v1/todos")
+      .then((response) => {
+        return response.json()
+      })
+      .then(response => {
+        this.setState({todos: response.data})
+      })
+  }
 
-    // TodoList-----------------
-    new TodoList(sectionMain).render(todos);
-
-    // Footer-----------------
-    new Footer(divContainer).render(todos)
-
-    return rootElement
+  render() {
+    return Stepan.createElement('div', {}, [
+      new TodoListHead(),
+      Stepan.createElement('section', { class: 'main' }, [
+        new TodoListToggleAll(),
+        new TodoList({todos: this.state.todos}),
+        new Footer({todos: this.state.todos}),
+      ])
+    ])
   }
 }
 
-new App(document.getElementById('todoapp')).render(todos)
+Stepan.renderDOM(document.getElementById('todoapp'), new App())
+

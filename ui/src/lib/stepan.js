@@ -1,36 +1,67 @@
 
 export default class Stepan {
-  static createElement(element, parent, attributes = {}) {
+  static createElement(element, attributes = {}, children = []) {
     // TODO: check if this is a valid tag name
     const newElement = document.createElement(element);
 
-    const { innerHTML, innerText } = attributes;
-
     for (let attribute in attributes) {
-      if (['innerHTML', 'innerText'].includes(attribute)) {
-        continue;
-      }
-
+      // need to handle events
+      // need to handle mono attriburtes checked...
+      if (attribute === 'checked' && !attributes[attribute]) continue;
       newElement.setAttribute(attribute, attributes[attribute]);
     }
 
-    innerHTML && (newElement.innerHTML = innerHTML);
-    innerText && (newElement.innerText = innerText);
-
-    parent.appendChild(newElement);
+    children.forEach(node => {
+      if (typeof node === 'string') {
+        newElement.appendChild(document.createTextNode(node));
+      } else if (Object.getPrototypeOf(Object.getPrototypeOf(node)).constructor.name === 'Component') {
+        newElement.appendChild(node.mount())
+      } else {
+        newElement.appendChild(node)
+      }
+    })
 
     return newElement;
   }
 
+  static renderDOM(container, component) {
+    container.innerHTML = '';
+    container.appendChild(component.mount())
+  }
+
   static Component = class {
-    constructor(parent) {
+    constructor(props = {}) {
+      this.props = props;
+      this.state = {};
+      this._pendingState = null; // to check if state is changed
+      this._currentElement = null; // to replace the component
 
-      // TODO: 1. Create StepanError class to define all framework errors
-      //       2. throw an error if parent is null or undefined, or if it's not a valid DOM object
-
-      this.parent = parent;
+      if ( typeof this.getInitialState === 'function' ) {
+        this.getInitialState();
+      }
     }
 
-    // TODO (Bonus): Ensure that every component returns a top-level root element
+    updateComponent() {
+      const prevState = this.state;
+
+      // will have to be optimised
+      if (this._pendingState !== prevState) {
+        this.state = this._pendingState;
+      }
+
+      this._pendingState = null;
+      this._currentElement.replaceWith(this.mount())
+    }
+
+    mount() {
+      this._currentElement = this.render();
+      return this._currentElement;
+    }
+
+    setState(partionNewState) {
+      this._pendingState = Object.assign({}, this.state, partionNewState)
+      // todo check if state was updated
+      this.updateComponent()
+    }
   }
 }

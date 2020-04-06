@@ -1,4 +1,5 @@
 import Stepan from '/src/lib/stepan.js';
+import { API_URL } from '/src/constants/index.js'
 
 import {
   TodoListHead,
@@ -19,7 +20,7 @@ class App extends Stepan.Component {
   }
 
   getInitialState() {
-    fetch("http://localhost:3000/api/v1/todos")
+    fetch(`${API_URL}/todos`)
       .then((response) => {
         return response.json()
       })
@@ -30,7 +31,7 @@ class App extends Stepan.Component {
 
   toggleAll() {
     const promises = this.state.todos.map(todo => 
-      fetch(`http://localhost:3000/api/v1/todos/${todo.id}`, {
+      fetch(`${API_URL}/todos/${todo.id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({todo: {isFinished: !this.state.allFinished}})
@@ -49,7 +50,7 @@ class App extends Stepan.Component {
     const { value } = target;
     if (value.replace(/\s/g, '').length === 0) return;
 
-    fetch('http://localhost:3000/api/v1/todos/', {
+    fetch(`${API_URL}/todos`, {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({todo: {title: value}})

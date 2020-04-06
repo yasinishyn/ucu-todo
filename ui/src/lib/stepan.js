@@ -68,7 +68,7 @@ export default class Stepan {
 
     setState(partionNewState) {
       console.log(partionNewState);
-      this._pendingState = Object.assign({}, this.state, partionNewState)
+      this._pendingState = {...this.state, ...partionNewState}
       // todo check if state was updated
       this.updateComponent()
     }

@@ -13,6 +13,7 @@ class App extends Stepan.Component {
     super(props);
 
     this.state = {
+      allFinished: false,
       todos: []
     };
   }
@@ -27,11 +28,29 @@ class App extends Stepan.Component {
       })
   }
 
+  toggleAll() {
+    const promises = this.state.todos.map(todo => 
+      fetch(`http://localhost:3000/api/v1/todos/${todo.id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({todo: {isFinished: !this.state.allFinished}})
+      })
+    );
+
+    Promise.all(promises).then(res =>res.map( res2 => res2.json()))
+      .then(resPromises => {
+        Promise.all(resPromises)
+          .then(result => result.map(res => res.data))
+          .then(result => this.setState({todos: result, allFinished: !this.state.allFinished}))
+      })
+
+  }
+
   render() {
     return Stepan.createElement('div', {}, [
       new TodoListHead(),
       Stepan.createElement('section', { class: 'main' }, [
-        new TodoListToggleAll(),
+        new TodoListToggleAll({toggleAll: this.toggleAll.bind(this)}),
         new TodoList({todos: this.state.todos}),
         new Footer({todos: this.state.todos}),
       ])

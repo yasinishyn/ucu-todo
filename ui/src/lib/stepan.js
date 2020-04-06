@@ -1,4 +1,6 @@
 
+const isEvent = key => key.startsWith('on');
+
 export default class Stepan {
   static createElement(element, attributes = {}, children = []) {
     // TODO: check if this is a valid tag name
@@ -6,8 +8,14 @@ export default class Stepan {
 
     for (let attribute in attributes) {
       // need to handle events
+      if (isEvent(attribute)) {
+        newElement.addEventListener(attribute.replace('on', ''), attributes[attribute])
+        continue;
+      }
+
       // need to handle mono attriburtes checked...
       if (attribute === 'checked' && !attributes[attribute]) continue;
+
       newElement.setAttribute(attribute, attributes[attribute]);
     }
 
@@ -59,6 +67,7 @@ export default class Stepan {
     }
 
     setState(partionNewState) {
+      console.log(partionNewState);
       this._pendingState = Object.assign({}, this.state, partionNewState)
       // todo check if state was updated
       this.updateComponent()

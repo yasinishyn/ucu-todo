@@ -43,12 +43,26 @@ class App extends Stepan.Component {
           .then(result => result.map(res => res.data))
           .then(result => this.setState({todos: result, allFinished: !this.state.allFinished}))
       })
+  }
 
+  createTodo({target}) {
+    const { value } = target;
+    if (value.replace(/\s/g, '').length === 0) return;
+
+    fetch('http://localhost:3000/api/v1/todos/', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({todo: {title: value}})
+    })
+    .then(res => res.json())
+    .then(res => this.setState({todos: [...this.state.todos, res.data]}))
   }
 
   render() {
     return Stepan.createElement('div', {}, [
-      new TodoListHead(),
+      new TodoListHead({
+        createTodo: this.createTodo.bind(this)
+      }),
       Stepan.createElement('section', { class: 'main' }, [
         new TodoListToggleAll({toggleAll: this.toggleAll.bind(this)}),
         new TodoList({todos: this.state.todos}),

@@ -4,7 +4,12 @@ export default class TodoListHead extends Stepan.Component {
   render() {
     return Stepan.createElement('header', {class: 'header'}, [
       Stepan.createElement('h1', { }, ['UCU Todo']),
-      Stepan.createElement('input', { class: "new-todo", placeholder: "What needs to be done?", value: ""})
+      Stepan.createElement('input', {
+        class: "new-todo",
+        placeholder: "What needs to be done?",
+        value: "",
+        onchange: this.props.createTodo
+      })
     ]);
   }
 }

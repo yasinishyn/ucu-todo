@@ -21,10 +21,13 @@
 1. Show (filter) All
 2. Show (filter) Active
 3. Show (filter) Completed
-4. Show the current todo count 
+4. Show the current todo count
 
 ## Run
-`$ serve ./`
+Install 'http-server' using npm
+`$ npm i http-server -g`
+
+Inside the root folder or 'ui' sub-project execute `$ http-server`
 
 ## Ideas
 1. Implement templating language like: http://slim-lang.com/
